@@ -19,5 +19,6 @@ namespace DataAccess.Concrete
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Writer> Writers { get; set; }
         public DbSet<Subsucribe> Subsucribes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
