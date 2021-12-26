@@ -11,10 +11,12 @@ namespace CoreMvcBlog.ViewComponents.Writer
     public class WriterMessageNatification : ViewComponent
     {
 
-        NotificationManager nm = new NotificationManager(new EfNotificationRepository());
-        public IViewComponentResult Invoke(int id)
+        MessageManager mm = new MessageManager(new EfMessageRepository());
+        public IViewComponentResult Invoke()
         {
-            var values = nm.ListAll();
+            string p;
+            p = "deneme@gmail.com";
+            var values = mm.GetInboxListByWriter(p);
             return View(values);
         }
     }

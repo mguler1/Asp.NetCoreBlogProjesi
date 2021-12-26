@@ -4,14 +4,16 @@ using DataAccess.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20211219185552_AddMessageTable")]
+    partial class AddMessageTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,41 +201,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("MessageId");
 
-                    b.ToTable("Message");
-                });
-
-            modelBuilder.Entity("Entity.Concrete.Message2", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("MessageDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MessageDetails")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("MessageStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("Receiver")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Sender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MessageId");
-
-                    b.HasIndex("Receiver");
-
-                    b.HasIndex("Sender");
-
-                    b.ToTable("Message2");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Entity.Concrete.Notification", b =>
@@ -341,21 +309,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("Entity.Concrete.Message2", b =>
-                {
-                    b.HasOne("Entity.Concrete.Writer", "ReceiverUser")
-                        .WithMany("WriterReceiver")
-                        .HasForeignKey("Receiver");
-
-                    b.HasOne("Entity.Concrete.Writer", "SenderUser")
-                        .WithMany("WriterSender")
-                        .HasForeignKey("Sender");
-
-                    b.Navigation("ReceiverUser");
-
-                    b.Navigation("SenderUser");
-                });
-
             modelBuilder.Entity("Entity.Concrete.Blog", b =>
                 {
                     b.Navigation("Comment");
@@ -369,10 +322,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entity.Concrete.Writer", b =>
                 {
                     b.Navigation("Blogs");
-
-                    b.Navigation("WriterReceiver");
-
-                    b.Navigation("WriterSender");
                 });
 #pragma warning restore 612, 618
         }

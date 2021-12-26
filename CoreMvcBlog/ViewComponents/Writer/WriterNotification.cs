@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Concrete;
+using DataAccess.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,11 @@ namespace CoreMvcBlog.ViewComponents.Writer
 {
     public class WriterNotification:ViewComponent
     {
-        public IViewComponentResult Invoke()
+        NotificationManager nm = new NotificationManager(new EfNotificationRepository());
+        public IViewComponentResult Invoke(int id)
         {
-            return View();
+            var values = nm.ListAll();
+            return View(values);
         }
     }
 }
