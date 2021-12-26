@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using Business.ValidationRules;
+using DataAccess.Concrete;
 using DataAccess.EntityFramework;
 using Entity.Concrete;
 using FluentValidation.Results;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CoreMvcBlog.Controllers
 {
-    [AllowAnonymous]
+ 
     public class BlogController : Controller
     {
         BlogManager bm = new BlogManager(new EfBlogRepository());
@@ -23,7 +24,7 @@ namespace CoreMvcBlog.Controllers
             var liste = bm.GetListWithCategory();
             return View(liste);
         }
-        [AllowAnonymous]
+     
         public IActionResult BlogDetails(int id)
         {
             ViewBag.i = id;
@@ -32,7 +33,10 @@ namespace CoreMvcBlog.Controllers
         }
         public IActionResult BlogListByWriter()
         {
-            var values = bm.GEtListWithCategoryByWriterBm(1);
+            Context c = new Context();
+            var usermail = User.Identity.Name;
+            var writerId = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var values = bm.GEtListWithCategoryByWriterBm(writerId);
             return View(values);
         }
 

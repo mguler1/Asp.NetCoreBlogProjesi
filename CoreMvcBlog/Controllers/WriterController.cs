@@ -19,9 +19,13 @@ namespace CoreMvcBlog.Controllers
     public class WriterController : Controller
     {
         WriterManager wm = new WriterManager(new EfWriterRepository());
-        [AllowAnonymous]
+     
+        [Authorize]
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.v = usermail;
+            
             return View();
         }
         [AllowAnonymous]
@@ -38,7 +42,10 @@ namespace CoreMvcBlog.Controllers
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var wValue = wm.GetById(1);
+            Context c = new Context();
+            var usermail = User.Identity.Name;
+            var writerId = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterId).FirstOrDefault();
+            var wValue = wm.GetById(writerId);
             return View(wValue);
         }
         [HttpPost]
