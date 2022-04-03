@@ -76,6 +76,7 @@ namespace CoreMvcBlog.Controllers
             }
            
         }
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteBlog(int id)
         {
             var blogfind = bm.GetById(id);

@@ -24,7 +24,8 @@
             <td>@item.Category.CategoryName</td>
             <td>@item.BlogStatus</td>
             <td>
-                <a href="/Blog/EditBlog/@item.BlogId"class="btn btn-info btn-sm" >Düzenle</a>
+                <a href="/Blog/EditBlog/@item.BlogId" class="btn btn-info btn-sm">Düzenle</a>
+                @Html.AntiForgeryToken()
                 <a href="/Blog/DeleteBlog/@item.BlogId" class="btn btn-danger btn-sm ">Sil</a>
             </td>
         </tr>
